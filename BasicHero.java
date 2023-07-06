@@ -14,4 +14,9 @@ public abstract class BasicHero {
         this.attackLevelBase = attackLevelBase;
         this.initiative = initiative;
     }
+
+    @Override
+    public String toString() {
+        return ("NAME: " + name + " " + "TYPE: " + type + " " + "ID = " + id + " " + "HEALTH = " + healthLevel + " " + "INITIATIVE = " + initiative + " " + "ATTACK = " + attackLevelBase);
+    }
 }
