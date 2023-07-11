@@ -1,54 +1,64 @@
+import units.*;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Program {
+
+    private static String getName() {
+        return String.valueOf(Names.values()[new Random().nextInt(Names.values().length)]);
+    }
     public static void main(String[] args) {
-        BasicHero kung_lao = new Monk("Kung Lao");
-        BasicHero shang_tsung = new Mage("Shang Tsung");
-        BasicHero kano = new Outlaw("Kano");
-        BasicHero jade = new Spearman("Jade");
-        BasicHero erron_black = new Sniper("Erron Black");
-        BasicHero fujin = new Crossbowman("Fujin");
-        BasicHero alesha = new Peasant("Alesha");
 
-//        System.out.println(kung_lao.getInfo());
-//        System.out.println(shang_tsung.getInfo());
-//        System.out.println(kano.getInfo());
-//        System.out.println(jade.getInfo());
-//        System.out.println(erron_black.getInfo());
-//        System.out.println(fujin.getInfo());
-//        System.out.println(alesha.getInfo());
+        ArrayList<BasicHero> alliance = new ArrayList<>();
+        ArrayList<BasicHero> empire = new ArrayList<>();
 
-        ArrayList<BasicHero> allHeroes  = new ArrayList<>();
-        allHeroes.add(kung_lao); allHeroes.add(shang_tsung); allHeroes.add(kano); allHeroes.add(jade);
-        allHeroes.add(erron_black); allHeroes.add(fujin); allHeroes.add(alesha);
-
-        ArrayList<BasicHero> team1 = new ArrayList<>();
-        ArrayList<BasicHero> team2 = new ArrayList<>();
-
-        for (int i = 0; i < 10; i++) {
-            int j = new Random().nextInt(0, 7);
-            switch (j){
-                case 0: team1.add(new Mage("Quan Chi"));
-                break;
-                case 1: team1.add(new Monk("Liu Kang"));
-                break;
-                case 2: team1.add(new Outlaw("Kabal"));
-                break;
-                case 3: team1.add(new Spearman("Tanya"));
-                break;
-                case 4: team1.add(new Sniper("Cyrax"));
-                break;
-                case 5: team1.add(new Crossbowman("Nightwolf"));
-                break;
-                default: team1.add(new Peasant("Oruzhnik"));
+        for (int count = 0; count < 10; count++) {
+            int newCharacter = new Random().nextInt(0, 4);
+            switch (newCharacter) {
+                case 0 -> {
+                    alliance.add(new Mage(getName(), 0, new Random().nextInt(0, 50)));
+                    empire.add(new Monk(getName(), 9, new Random().nextInt(0, 50)));
+                }
+                case 1 -> {
+                    alliance.add(new Spearman(getName(), 0, new Random().nextInt(0, 50)));
+                    empire.add(new Outlaw(getName(), 9, new Random().nextInt(0, 50)));
+                }
+                case 2 -> {
+                    alliance.add(new Sniper(getName(), 0, new Random().nextInt(0, 50)));
+                    empire.add(new Crossbowman(getName(), 9, new Random().nextInt(0, 50)));
+                }
+                default -> {
+                    alliance.add(new Peasant(getName(), 0, new Random().nextInt(0, 50)));
+                    empire.add(new Peasant(getName(), 9, new Random().nextInt(0, 50)));
+                }
             }
-            team1.add(allHeroes.get(new Random().nextInt(0, allHeroes.size())));
-            team2.add(allHeroes.get(new Random().nextInt(0, allHeroes.size())));
         }
-        System.out.println("Команда1:");
-        team1.forEach(i -> System.out.println(i.getInfo()));
-        System.out.println("Команда2:");
-        team2.forEach(i -> System.out.println(i.getInfo()));
+
+        ArrayList<BasicHero> unitedTeam = new ArrayList<>();
+        unitedTeam.addAll(alliance);
+        unitedTeam.addAll(empire);
+        unitedTeam.sort((o1, o2) -> o2.getInitiative() - o1.getInitiative());
+
+        System.out.println("Alliance members:");
+        alliance.forEach(item -> System.out.println(item.getInfo()));
+        System.out.println("Empire members:");
+        empire.forEach(item -> System.out.println(item.getInfo()));
+
+        for (BasicHero item : unitedTeam) {
+            if (alliance.contains(item)) {
+                item.step(empire, alliance);
+            } else {
+                item.step(alliance, empire);
+            }
+            System.out.println("INITIATIVE = " + item.getInitiative());
+        }
+
+        System.out.println("_".repeat(120));
+        System.out.println("Alliance info after step:");
+        alliance.forEach(item -> System.out.println(item.getInfo()));
+        System.out.println("Empire info after step:");
+        empire.forEach(item -> System.out.println(item.getInfo()));
+
     }
 }

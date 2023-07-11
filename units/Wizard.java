@@ -1,0 +1,26 @@
+package units;
+
+import units.BasicHero;
+
+import java.util.ArrayList;
+
+public abstract class Wizard extends BasicHero {
+
+    public Wizard(int id, int healthLevel, String name, String type, int initiative, int heal, int x, int y) {
+        super(id, healthLevel, name, type, initiative, x, y);
+        this.heal = heal;
+    }
+
+    public int heal;
+
+    @Override
+    public String getInfo() {
+        return ("NAME: " + name + " TYPE: " + type + " ID = " + id + " HEALTH = " + healthLevel
+                + " INITIATIVE = " + initiative + " HEAL = " + heal + " X = " + place.x + " Y = " + place.y);
+    }
+
+    @Override
+    public void step(ArrayList<BasicHero> enemies, ArrayList<BasicHero> ours) {
+
+    }
+}
