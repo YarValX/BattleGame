@@ -1,8 +1,7 @@
 package units;
 
-public class Outlaw extends Shooters {
-
+public class Outlaw extends Infantry{
     public Outlaw(String name, int x, int y) {
-        super(2, 100, name, "units.Outlaw", 3, 2, x, y);
+        super(3, 100, name, "Outlaw", 7, 6, x, y);
     }
 }

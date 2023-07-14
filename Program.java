@@ -1,5 +1,4 @@
 import units.*;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -8,42 +7,40 @@ public class Program {
     private static String getName() {
         return String.valueOf(Names.values()[new Random().nextInt(Names.values().length)]);
     }
+
+    static ArrayList<BasicHero> alliance = new ArrayList<>();
+    static ArrayList<BasicHero> empire = new ArrayList<>();
+    static ArrayList<BasicHero> unitedTeam = new ArrayList<>();
+
     public static void main(String[] args) {
 
-        ArrayList<BasicHero> alliance = new ArrayList<>();
-        ArrayList<BasicHero> empire = new ArrayList<>();
-
-        for (int count = 0; count < 10; count++) {
+        for (int count = 1; count < 11; count++) {
             int newCharacter = new Random().nextInt(0, 4);
             switch (newCharacter) {
                 case 0 -> {
-                    alliance.add(new Mage(getName(), 0, new Random().nextInt(0, 50)));
-                    empire.add(new Monk(getName(), 9, new Random().nextInt(0, 50)));
+                    alliance.add(new Mage(getName(), 1, count));
+                    empire.add(new Monk(getName(), 10, count));
                 }
                 case 1 -> {
-                    alliance.add(new Spearman(getName(), 0, new Random().nextInt(0, 50)));
-                    empire.add(new Outlaw(getName(), 9, new Random().nextInt(0, 50)));
+                    alliance.add(new Spearman(getName(), 1, count));
+                    empire.add(new Outlaw(getName(), 10, count));
                 }
                 case 2 -> {
-                    alliance.add(new Sniper(getName(), 0, new Random().nextInt(0, 50)));
-                    empire.add(new Crossbowman(getName(), 9, new Random().nextInt(0, 50)));
+                    alliance.add(new Sniper(getName(), 1, count));
+                    empire.add(new Crossbowman(getName(), 10, count));
                 }
                 default -> {
-                    alliance.add(new Peasant(getName(), 0, new Random().nextInt(0, 50)));
-                    empire.add(new Peasant(getName(), 9, new Random().nextInt(0, 50)));
+                    alliance.add(new Peasant(getName(), 1, count));
+                    empire.add(new Peasant(getName(), 10, count));
                 }
             }
         }
 
-        ArrayList<BasicHero> unitedTeam = new ArrayList<>();
         unitedTeam.addAll(alliance);
         unitedTeam.addAll(empire);
         unitedTeam.sort((o1, o2) -> o2.getInitiative() - o1.getInitiative());
 
-        System.out.println("Alliance members:");
-        alliance.forEach(item -> System.out.println(item.getInfo()));
-        System.out.println("Empire members:");
-        empire.forEach(item -> System.out.println(item.getInfo()));
+        View.view();
 
         for (BasicHero item : unitedTeam) {
             if (alliance.contains(item)) {
@@ -51,14 +48,8 @@ public class Program {
             } else {
                 item.step(alliance, empire);
             }
-            System.out.println("INITIATIVE = " + item.getInitiative());
         }
 
-        System.out.println("_".repeat(120));
-        System.out.println("Alliance info after step:");
-        alliance.forEach(item -> System.out.println(item.getInfo()));
-        System.out.println("Empire info after step:");
-        empire.forEach(item -> System.out.println(item.getInfo()));
-
+        View.view();
     }
 }

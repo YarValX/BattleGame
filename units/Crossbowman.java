@@ -1,8 +1,7 @@
 package units;
 
-public class Crossbowman extends Shooters {
-
+public class Crossbowman extends Shooters{
     public Crossbowman(String name, int x, int y) {
-        super(5, 100, name, "units.Crossbowman", 5, 7, x, y);
+        super(6, 100, name, "Crossbowman", 10, 9, 30, x, y);
     }
 }

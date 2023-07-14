@@ -1,10 +1,7 @@
 package units;
 
-import units.Infantry;
-
-public class Spearman extends Infantry {
-
+public class Spearman extends Infantry{
     public Spearman(String name, int x, int y) {
-        super(3, 100, name, "units.Spearman", 6, 3, x, y);
+        super(4, 100, name, "Spearman", 8, 8, x, y);
     }
 }
