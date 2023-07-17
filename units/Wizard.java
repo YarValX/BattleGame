@@ -19,14 +19,14 @@ public abstract class Wizard extends BasicHero {
     public void step(ArrayList<BasicHero> enemies, ArrayList<BasicHero> ours) {
         if (this.healthLevel > 0) {
             for (BasicHero item : ours) {
-                if (item.healthLevel < 99) {
+                if (item.healthLevel < 99 & item.healthLevel > 0) {
                     item.healthLevel += this.heal;
                     System.out.println("Вылечил: " + item.name);
                     return;
                 }
             }
             BasicHero nearestEnemy = findNearEnemy(enemies);
-            nearestEnemy.healthLevel -= this.heal;
+            nearestEnemy.getDamage(this.heal);
             System.out.println("Повредил: " + nearestEnemy.name);
         }
     }
