@@ -37,6 +37,11 @@ public abstract class BasicHero implements Actions{
         return super.getClass().getSimpleName();
     }
 
+    protected void getDamage (int damage) {
+        this.healthLevel -= damage;
+        if (healthLevel < 0) healthLevel = 0;
+    }
+
 
     protected BasicHero findNearEnemy (ArrayList<BasicHero> enemies) {
         double min = 1000; //изначально берем за минимальное некое большое расстояние
