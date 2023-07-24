@@ -55,17 +55,3 @@ public abstract class BasicHero implements Actions{
         return enemies.get(count);
     }
 }
-
-
-    protected BasicHero findNearEnemy (ArrayList<BasicHero> enemies) {
-        double min = 1000;
-        int count = 0;
-        for (int i = 0; i < enemies.size(); i++) {
-            if (place.calcDistance(enemies.get(i).place) < min) {
-                min = place.calcDistance(enemies.get(i).place);
-                count = i;
-            }
-        }
-        return enemies.get(count);
-    }
-}
