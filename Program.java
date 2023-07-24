@@ -1,5 +1,4 @@
 import units.*;
-
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -19,20 +18,36 @@ public class Program {
         for (int count = 1; count < 11; count++) {
             int newCharacter = new Random().nextInt(0, 4);
             switch (newCharacter) {
-                case 0 -> alliance.add(new Mage(getName(), 1, count));
-                case 1 -> alliance.add(new Spearman(getName(), 1, count));
-                case 2 -> alliance.add(new Sniper(getName(), 1, count));
-                default -> alliance.add(new Peasant(getName(), 1, count));
+                case 0 -> {
+                    alliance.add(new Mage(getName(), 1, count));
+                }
+                case 1 -> {
+                    alliance.add(new Spearman(getName(), 1, count));
+                }
+                case 2 -> {
+                    alliance.add(new Sniper(getName(), 1, count));
+                }
+                default -> {
+                    alliance.add(new Peasant(getName(), 1, count));
+                }
             }
         }
 
         for (int count = 1; count < 11; count++) {
             int newCharacter = new Random().nextInt(0, 4);
             switch (newCharacter) {
-                case 0 -> empire.add(new Monk(getName(), 10, count));
-                case 1 -> empire.add(new Outlaw(getName(), 10, count));
-                case 2 -> empire.add(new Crossbowman(getName(), 10, count));
-                default -> empire.add(new Peasant(getName(), 10, count));
+                case 0 -> {
+                    empire.add(new Monk(getName(), 10, count));
+                }
+                case 1 -> {
+                    empire.add(new Outlaw(getName(), 10, count));
+                }
+                case 2 -> {
+                    empire.add(new Crossbowman(getName(), 10, count));
+                }
+                default -> {
+                    empire.add(new Peasant(getName(), 10, count));
+                }
             }
         }
 
@@ -40,47 +55,43 @@ public class Program {
         unitedTeam.addAll(empire);
         unitedTeam.sort((o1, o2) -> o2.getInitiative() - o1.getInitiative());
 
-        Scanner scan = new Scanner(System.in);
-
         View.view();
 
         int deadCountAlliance = 0;
         int deadCountEmpire = 0;
         boolean endGame = false;
 
+        Scanner scan = new Scanner(System.in);
+
         while (!endGame) {
             scan.nextLine();
             for (BasicHero item : unitedTeam) {
                 if (alliance.contains(item)) {
+                    if (item.getHealthLevel() <= 0) {
+                        deadCountAlliance += 1;
+                    }
                     item.step(empire, alliance);
                 } else {
+                    if (item.getHealthLevel() <= 0) {
+                        deadCountEmpire += 1;
+                    }
                     item.step(alliance, empire);
                 }
             }
 
             View.view();
 
-            for (BasicHero item : alliance) {
-                if (item.getHealthLevel() <= 0) {
-                    deadCountAlliance += 1;
-                }
-                if (deadCountAlliance == alliance.size()) {
-                    System.out.println("Победила команда Empire");
-                    endGame = true;
-                }
+            if (deadCountAlliance == alliance.size()) {
+                System.out.println("GAME OVER\nEmpire wins");
+                endGame = true;
+            }
+            if (deadCountEmpire == empire.size()) {
+                System.out.println("GAME OVER\nAlliance wins");
+                endGame = true;
             }
 
-            for (BasicHero item : empire) {
-                if (item.getHealthLevel() <= 0) {
-                    deadCountEmpire += 1;
-                }
-                if (deadCountEmpire == empire.size()) {
-                    System.out.println("Победила команда Alliance");
-                    endGame = true;
-                }
-            }
-            System.out.println("Убито у Alliance: " + deadCountAlliance);
-            System.out.println("Убито у Empire: " + deadCountEmpire);
+            System.out.println("Statistics:\nAlliance killed: " + deadCountAlliance);
+            System.out.println("Empire killed: " + deadCountEmpire);
             deadCountAlliance = 0;
             deadCountEmpire = 0;
         }

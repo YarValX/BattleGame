@@ -7,7 +7,7 @@ public class View {
     private static final String top10 = formatDiv("a") + String.join("", Collections.nCopies(9, formatDiv("-b"))) + formatDiv("-c");
     private static final String midl10 = formatDiv("d") + String.join("", Collections.nCopies(9, formatDiv("-e"))) + formatDiv("-f");
     private static final String bottom10 = formatDiv("g") + String.join("", Collections.nCopies(9, formatDiv("-h"))) + formatDiv("-i");
-    private static void tabSetter(int cnt, int max){
+    private static void tabSetter(int cnt, int max) {
         int dif = max - cnt + 2;
         if (dif>0) System.out.printf("%" + dif + "s", ":\t"); else System.out.print(":\t");
     }
@@ -23,10 +23,10 @@ public class View {
                 .replace('i', '\u2518')
                 .replace('-', '\u2500');
     }
-    private static String getChar(int x, int y){
+    private static String getChar(int x, int y) {
         String out = "| ";
         for (BasicHero human: Program.unitedTeam) {
-            if (human.getPlace().x == x && human.getPlace().y == y){
+            if (human.getPlace().x == x && human.getPlace().y == y) {
                 if (human.getHealthLevel() == 0) {
                     out = "|" + (AnsiColors.ANSI_RED + human.toString().charAt(0) + AnsiColors.ANSI_RESET);
                     break;
@@ -39,7 +39,7 @@ public class View {
         return out;
     }
     public static void view() {
-        if (step == 1 ){
+        if (step == 1 ) {
             System.out.print(AnsiColors.ANSI_YELLOW + "First step" + AnsiColors.ANSI_RESET);
         } else {
             System.out.print(AnsiColors.ANSI_YELLOW+ "Step " + step + AnsiColors.ANSI_RESET);
@@ -50,7 +50,7 @@ public class View {
         System.out.println();
         System.out.print(top10 + "    ");
         System.out.print(AnsiColors.ANSI_GREEN+"Alliance"+AnsiColors.ANSI_RESET);
-        //for (int i = 0; i < l[0]-9; i++)
+
         System.out.print(" ".repeat(l[0]-9));
         System.out.println(AnsiColors.ANSI_BLUE+"    Empire"+AnsiColors.ANSI_RESET);
         for (int i = 1; i < 11; i++) {
